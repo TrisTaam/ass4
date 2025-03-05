@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load items_filters %}
+{% block content %}
+    <!-- <h1>HOT DEALS</h1> -->
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for item in items %}
+                <div class="col">
+                    <div class="card h-100" style="border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"> <!-- Curved and shadow effect -->
+                        <!-- Set fixed square size for the image -->
+                        <img src="{{ item.image_url }}" class="card-img-top" alt="{{ item.name }}" style="object-fit: cover; width: 100%; height: 200px; border-radius: 15px 15px 0 0;"> <!-- Curved top corners -->
+                        <div class="card-body" style="background: linear-gradient(45deg, #86BCE8 30%, #5D84C3 90%); border-radius: 0 0 15px 15px;"> <!-- Purple-blue to purple gradient with curved bottom -->
+                            <h5 class="card-title">{{ item.name }}</h5>
+                            <p class="card-text">{{ item.description }}</p>
+                            <a href="{% url 'item_detail' item|get_id %}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

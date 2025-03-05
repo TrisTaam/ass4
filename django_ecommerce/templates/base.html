@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>E-commerce</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Full Page Background: Black to Gray Gradient */
+        body {
+            background-image: linear-gradient(180deg, #253856, #253856); /* Black to Gray gradient */
+            color: white; /* Set text color to white for contrast */
+            font-family: Arial, sans-serif; /* Set font for better readability */
+        }
+
+        /* Navbar Background: Slight Purple to Dark Purple Gradient */
+        .navbar {
+            padding: 0.5rem 2rem;  /* Make the navbar bigger */
+            position: sticky;    /* Make the navbar sticky */
+            top: 0;              /* Stick to the top of the page */
+            z-index: 1000;       /* Make sure it stays on top of other elements */
+            background-image: linear-gradient(90deg, #5D84C3, #5D84C3); /* Slight Purple to Dark Purple gradient */
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 1.5rem; /* Increase the font size of navbar links */
+            color: white !important; /* Set text color to white */
+        }
+
+        .navbar-text {
+            font-size: 1.5rem; /* Increase the size of the welcome text */
+            color: white !important; /* Set welcome text color to white */
+            animation: twinkle 1.5s ease-in-out infinite; /* Twinkling effect animation */
+        }
+
+        /* Twinkling effect */
+        @keyframes twinkle {
+            0% {
+                opacity: 0.8;
+            }
+            50% {
+                opacity: 1; /* Fully visible */
+            }
+            100% {
+                opacity: 0.8; /* Slightly faded */
+            }
+        }
+
+        .navbar-nav .nav-link.active {
+            font-size: 1.5rem; /* Keep the active link size the same */
+        }
+
+        /* Adjust content padding if necessary */
+        main.container {
+            margin-top: 60px; /* Add margin to avoid navbar covering content */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            {% if user.is_authenticated %}
+                <span class="navbar-text">Welcome, {{ user.first_name }}</span>
+            {% else %}
+                <a class="navbar-link" href="{% url 'login' %}">Login</a> | <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/items/' %}active{% endif %}" href="{% url 'home' %}">Home</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/cart/' %}active{% endif %}" href="{% url 'view_cart' %}">Cart</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/profile/' %}active{% endif %}" href="{% url 'profile' %}">Profile</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="container mt-4">
+        {% block content %}{% endblock %}
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load items_filters %}
+{% block content %}
+    <h1>{{ item.name }}</h1>
+    <p><strong>Type:</strong> {{ item.category }}</p>
+    <p><strong>Description:</strong> {{ item.description }}</p>
+    <p><strong>Price:</strong> ${{ item.price }}</p>
+    <a href="{% url 'add_to_cart' item|get_id %}" class="btn btn-success">Add to Cart</a>
+    <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+{% endblock %}

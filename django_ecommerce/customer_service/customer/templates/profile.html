@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>User Profile</h1>
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>First Name:</strong> {{ user.first_name }}</p>
+    <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+    <p><strong>Customer Type:</strong> {{ user.customer_type }}</p>
+    <p><strong>Loyalty Points:</strong> {{ user.loyalty_points }}</p>
+    <!-- Add more features like order history later -->
+{% endblock %}

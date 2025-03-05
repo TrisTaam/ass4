@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Checkout</h1>
+    <p>Total Price: ${{ total_price }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label>Shipping Method</label>
+            <select name="shipping_method" class="form-select">
+                <option value="standard">Standard ($5)</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label>Payment Method</label>
+            <select name="payment_method" class="form-select">
+                <option value="credit_card">Credit Card</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Pay Now</button>
+    </form>
+{% endblock %}
