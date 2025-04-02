@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - E-Commerce Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+        nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .profile-container {
+            display: flex;
+            margin-top: 20px;
+        }
+        .sidebar {
+            width: 25%;
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .main-content {
+            width: 75%;
+            padding: 0 20px;
+        }
+        .user-info {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .order-history {
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: block;
+            background-color: #ddd;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>User Profile</h1>
+    </header>
+    
+    <nav>
+        <a href="/home">Home</a>
+        <a href="/profile">Profile</a>
+        <a href="/logout">Logout</a>
+    </nav>
+    
+    <div class="container">
+        <div class="profile-container">
+            <div class="sidebar">
+                <div class="profile-image">
+                    <!-- Profile image would go here -->
+                </div>
+                <h2>User123</h2>
+                <p>customer@example.com</p>
+                <p>Customer Type: <strong>VIP</strong></p>
+                <button>Edit Profile</button>
+            </div>
+            
+            <div class="main-content">
+                <div class="user-info">
+                    <h2>Account Information</h2>
+                    <p><strong>Name:</strong> John Doe</p>
+                    <p><strong>Email:</strong> customer@example.com</p>
+                    <p><strong>Phone:</strong> +1-123-456-7890</p>
+                    <p><strong>Address:</strong> 123 Main St, City, Country</p>
+                    <p><strong>Member Since:</strong> January 1, 2023</p>
+                </div>
+                
+                <div class="order-history">
+                    <h2>Order History</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Date</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#12345</td>
+                                <td>2023-03-15</td>
+                                <td>3</td>
+                                <td>$120.00</td>
+                                <td>Delivered</td>
+                            </tr>
+                            <tr>
+                                <td>#12346</td>
+                                <td>2023-02-28</td>
+                                <td>1</td>
+                                <td>$50.00</td>
+                                <td>Shipped</td>
+                            </tr>
+                            <tr>
+                                <td>#12347</td>
+                                <td>2023-01-10</td>
+                                <td>5</td>
+                                <td>$200.00</td>
+                                <td>Delivered</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 Microservices E-Commerce Platform. All rights reserved.</p>
+    </footer>
+</body>
+</html> 

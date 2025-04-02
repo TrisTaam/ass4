@@ -1,0 +1,142 @@
+[
+  {
+    "model": "cart.cart",
+    "pk": 1,
+    "fields": {
+      "customer_id": 3,
+      "customer_type": "registered",
+      "created_at": "2023-01-05T10:00:00Z",
+      "updated_at": "2023-01-05T12:30:00Z",
+      "is_active": true,
+      "items": [
+        {
+          "item_id": 1,
+          "item_type": "book",
+          "quantity": 2,
+          "added_at": "2023-01-05T10:15:00Z",
+          "price": 29.99
+        },
+        {
+          "item_id": 3,
+          "item_type": "book",
+          "quantity": 1,
+          "added_at": "2023-01-05T11:00:00Z",
+          "price": 49.99
+        }
+      ],
+      "total_price": 109.97
+    }
+  },
+  {
+    "model": "cart.cart",
+    "pk": 2,
+    "fields": {
+      "customer_id": 4,
+      "customer_type": "vip",
+      "created_at": "2023-01-05T14:00:00Z",
+      "updated_at": "2023-01-05T16:30:00Z",
+      "is_active": true,
+      "items": [
+        {
+          "item_id": 2,
+          "item_type": "laptop",
+          "quantity": 1,
+          "added_at": "2023-01-05T14:15:00Z",
+          "price": 1999.99
+        },
+        {
+          "item_id": 2,
+          "item_type": "mobile",
+          "quantity": 1,
+          "added_at": "2023-01-05T15:00:00Z",
+          "price": 1199.99
+        }
+      ],
+      "total_price": 3199.98
+    }
+  },
+  {
+    "model": "cart.cart",
+    "pk": 3,
+    "fields": {
+      "customer_id": 5,
+      "customer_type": "registered",
+      "created_at": "2023-01-06T09:00:00Z",
+      "updated_at": "2023-01-06T09:45:00Z",
+      "is_active": true,
+      "items": [
+        {
+          "item_id": 5,
+          "item_type": "clothes",
+          "quantity": 1,
+          "added_at": "2023-01-06T09:15:00Z",
+          "price": 19.99
+        },
+        {
+          "item_id": 3,
+          "item_type": "clothes",
+          "quantity": 1,
+          "added_at": "2023-01-06T09:30:00Z",
+          "price": 89.99
+        }
+      ],
+      "total_price": 109.98
+    }
+  },
+  {
+    "model": "cart.cart",
+    "pk": 4,
+    "fields": {
+      "customer_id": 2,
+      "customer_type": "guest",
+      "created_at": "2023-01-06T11:00:00Z",
+      "updated_at": "2023-01-06T11:30:00Z",
+      "is_active": true,
+      "items": [
+        {
+          "item_id": 4,
+          "item_type": "book",
+          "quantity": 1,
+          "added_at": "2023-01-06T11:15:00Z",
+          "price": 44.99
+        }
+      ],
+      "total_price": 44.99
+    }
+  },
+  {
+    "model": "cart.cart",
+    "pk": 5,
+    "fields": {
+      "customer_id": 1,
+      "customer_type": "vip",
+      "created_at": "2023-01-07T10:00:00Z",
+      "updated_at": "2023-01-07T12:00:00Z",
+      "is_active": true,
+      "items": [
+        {
+          "item_id": 5,
+          "item_type": "mobile",
+          "quantity": 1,
+          "added_at": "2023-01-07T10:15:00Z",
+          "price": 1199.99
+        },
+        {
+          "item_id": 4,
+          "item_type": "clothes",
+          "quantity": 1,
+          "added_at": "2023-01-07T11:00:00Z",
+          "price": 129.99
+        },
+        {
+          "item_id": 1,
+          "item_type": "laptop",
+          "quantity": 1,
+          "added_at": "2023-01-07T11:30:00Z",
+          "price": 1899.99
+        }
+      ],
+      "total_price": 3229.97
+    }
+  }
+] 

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -73,16 +74,16 @@ WSGI_APPLICATION = 'shipping_service.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ecommerce_transactions',
-        'USER': 'postgres',
-        'PASSWORD': '2512',
-        'HOST': 'db-transactions',
-        'PORT': '5432',
+        'NAME': os.environ.get('DB_NAME', 'ecommerce_transactions'),
+        'USER': os.environ.get('DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', '2512'),
+        'HOST': os.environ.get('DB_HOST', 'postgres-db'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
 

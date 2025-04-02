@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Guest Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4>Welcome to Guest Customer Service</h4>
+            </div>
+            <div class="card-body">
+                <p>As a guest, you can browse products and add them to your cart without creating an account.</p>
+                <p>Your session will be tracked, and you can convert to a registered account later if desired.</p>
+                
+                <div class="mt-4">
+                    <h5>Your Session ID:</h5>
+                    <p class="text-muted">{{ session_id }}</p>
+                </div>
+                
+                <div class="mt-4">
+                    <a href="#" class="btn btn-outline-primary">Continue Shopping</a>
+                    <a href="#" class="btn btn-outline-success">Register for an Account</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

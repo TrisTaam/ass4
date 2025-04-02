@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}VIP Customer Service - Exclusive Benefits{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 text-center mb-5">
+        <h1>Welcome to the <span style="color: var(--vip-gold);">VIP Customer Service</span></h1>
+        <p class="lead">Experience exclusive benefits, personalized service, and premium rewards</p>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>VIP Membership Tiers</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="p-3" style="border: 1px solid #555; border-radius: 5px;">
+                            <h5 style="color: #cd7f32;">Bronze</h5>
+                            <p>Entry level VIP benefits</p>
+                            <ul>
+                                <li>5% discount on all purchases</li>
+                                <li>Free standard shipping</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="p-3" style="border: 1px solid #c0c0c0; border-radius: 5px;">
+                            <h5 style="color: #c0c0c0;">Silver</h5>
+                            <p>Mid-tier VIP benefits</p>
+                            <ul>
+                                <li>10% discount on all purchases</li>
+                                <li>Free express shipping</li>
+                                <li>Early access to sales</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="p-3" style="border: 1px solid #ffd700; border-radius: 5px;">
+                            <h5 style="color: #ffd700;">Gold</h5>
+                            <p>Premium VIP benefits</p>
+                            <ul>
+                                <li>15% discount on all purchases</li>
+                                <li>Free priority shipping</li>
+                                <li>Exclusive product access</li>
+                                <li>Quarterly free gifts</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="p-3" style="border: 1px solid var(--vip-gold); border-radius: 5px; background-color: rgba(212, 175, 55, 0.1);">
+                            <h5 style="color: var(--vip-gold);">Platinum</h5>
+                            <p>Elite VIP benefits</p>
+                            <ul>
+                                <li>20% discount on all purchases</li>
+                                <li>Free international shipping</li>
+                                <li>All exclusive products access</li>
+                                <li>Monthly free gifts</li>
+                                <li>Dedicated customer service rep</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>Available VIP Benefits</h4>
+            </div>
+            <div class="card-body">
+                {% if benefits %}
+                <div class="row">
+                    {% for benefit in benefits %}
+                    <div class="col-md-6 mb-3">
+                        <div class="p-3" style="border: 1px solid #555; border-radius: 5px;">
+                            <h5>{{ benefit.name }}</h5>
+                            <p>{{ benefit.description }}</p>
+                            <p>
+                                <span class="badge bg-secondary">{{ benefit.get_benefit_type_display }}</span>
+                                {% if benefit.benefit_type == 'discount' %}
+                                <span class="badge bg-success">{{ benefit.discount_percent }}% off</span>
+                                {% endif %}
+                            </p>
+                            <p class="small text-muted">
+                                Available for: 
+                                {% for tier in benefit.eligible_tiers.split %}
+                                <span class="vip-badge">{{ tier }}</span>
+                                {% endfor %}
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p>No VIP benefits are currently available.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body text-center">
+                <h4>Ready to Join?</h4>
+                <p>Become a VIP member today and unlock exclusive benefits!</p>
+                <a href="{% url 'vip_register' %}" class="btn btn-lg btn-primary">Join VIP Program</a>
+                <p class="mt-3">
+                    Already a VIP member? <a href="{% url 'vip_login' %}" style="color: var(--vip-gold);">Login here</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

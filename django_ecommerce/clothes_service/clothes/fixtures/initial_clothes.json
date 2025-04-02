@@ -1,0 +1,199 @@
+[
+  {
+    "model": "clothes.clothes",
+    "pk": 1,
+    "fields": {
+      "name": "Classic Oxford Shirt",
+      "category": "tops",
+      "gender": "men",
+      "description": "A timeless oxford cotton shirt perfect for any occasion.",
+      "price": 49.99,
+      "discount_percentage": 0,
+      "available_sizes": ["S", "M", "L", "XL", "XXL"],
+      "available_colors": ["White", "Light Blue", "Navy"],
+      "size_system": "US",
+      "material_composition": {
+        "cotton": 95,
+        "elastane": 5
+      },
+      "season": "all",
+      "stock_quantities": {
+        "S:White": 25,
+        "S:Light Blue": 20,
+        "S:Navy": 15,
+        "M:White": 30,
+        "M:Light Blue": 25,
+        "M:Navy": 20,
+        "L:White": 35,
+        "L:Light Blue": 30,
+        "L:Navy": 25,
+        "XL:White": 25,
+        "XL:Light Blue": 20,
+        "XL:Navy": 15,
+        "XXL:White": 15,
+        "XXL:Light Blue": 10,
+        "XXL:Navy": 10
+      },
+      "image_url": "https://example.com/oxford-shirt.jpg",
+      "is_available": true,
+      "created_at": "2023-01-04T08:00:00Z",
+      "updated_at": "2023-01-04T08:00:00Z"
+    }
+  },
+  {
+    "model": "clothes.clothes",
+    "pk": 2,
+    "fields": {
+      "name": "Slim Fit Jeans",
+      "category": "pants",
+      "gender": "women",
+      "description": "Modern slim fit jeans with stretch for comfort.",
+      "price": 79.99,
+      "discount_percentage": 15,
+      "available_sizes": ["24", "26", "28", "30", "32"],
+      "available_colors": ["Black", "Blue", "Light Wash"],
+      "size_system": "US",
+      "material_composition": {
+        "cotton": 92,
+        "polyester": 6,
+        "elastane": 2
+      },
+      "season": "all",
+      "stock_quantities": {
+        "24:Black": 15,
+        "24:Blue": 12,
+        "24:Light Wash": 10,
+        "26:Black": 20,
+        "26:Blue": 18,
+        "26:Light Wash": 15,
+        "28:Black": 25,
+        "28:Blue": 22,
+        "28:Light Wash": 20,
+        "30:Black": 20,
+        "30:Blue": 18,
+        "30:Light Wash": 15,
+        "32:Black": 15,
+        "32:Blue": 12,
+        "32:Light Wash": 10
+      },
+      "image_url": "https://example.com/slim-jeans.jpg",
+      "is_available": true,
+      "created_at": "2023-01-04T08:10:00Z",
+      "updated_at": "2023-01-04T08:10:00Z"
+    }
+  },
+  {
+    "model": "clothes.clothes",
+    "pk": 3,
+    "fields": {
+      "name": "Summer Floral Dress",
+      "category": "dresses",
+      "gender": "women",
+      "description": "Light and airy summer dress with floral pattern.",
+      "price": 89.99,
+      "discount_percentage": 0,
+      "available_sizes": ["XS", "S", "M", "L", "XL"],
+      "available_colors": ["Blue Floral", "Pink Floral"],
+      "size_system": "US",
+      "material_composition": {
+        "cotton": 65,
+        "polyester": 35
+      },
+      "season": "summer",
+      "stock_quantities": {
+        "XS:Blue Floral": 10,
+        "XS:Pink Floral": 8,
+        "S:Blue Floral": 15,
+        "S:Pink Floral": 12,
+        "M:Blue Floral": 20,
+        "M:Pink Floral": 18,
+        "L:Blue Floral": 15,
+        "L:Pink Floral": 12,
+        "XL:Blue Floral": 10,
+        "XL:Pink Floral": 8
+      },
+      "image_url": "https://example.com/floral-dress.jpg",
+      "is_available": true,
+      "created_at": "2023-01-04T08:20:00Z",
+      "updated_at": "2023-01-04T08:20:00Z"
+    }
+  },
+  {
+    "model": "clothes.clothes",
+    "pk": 4,
+    "fields": {
+      "name": "Winter Puffer Jacket",
+      "category": "outerwear",
+      "gender": "unisex",
+      "description": "Warm puffer jacket perfect for cold weather.",
+      "price": 129.99,
+      "discount_percentage": 0,
+      "available_sizes": ["S", "M", "L", "XL"],
+      "available_colors": ["Black", "Navy", "Red"],
+      "size_system": "US",
+      "material_composition": {
+        "polyester": 90,
+        "down": 10
+      },
+      "season": "winter",
+      "stock_quantities": {
+        "S:Black": 15,
+        "S:Navy": 12,
+        "S:Red": 10,
+        "M:Black": 20,
+        "M:Navy": 18,
+        "M:Red": 15,
+        "L:Black": 20,
+        "L:Navy": 18,
+        "L:Red": 15,
+        "XL:Black": 15,
+        "XL:Navy": 12,
+        "XL:Red": 10
+      },
+      "image_url": "https://example.com/puffer-jacket.jpg",
+      "is_available": true,
+      "created_at": "2023-01-04T08:30:00Z",
+      "updated_at": "2023-01-04T08:30:00Z"
+    }
+  },
+  {
+    "model": "clothes.clothes",
+    "pk": 5,
+    "fields": {
+      "name": "Kids Graphic T-Shirt",
+      "category": "tops",
+      "gender": "children",
+      "description": "Fun graphic t-shirt for kids with dinosaur print.",
+      "price": 19.99,
+      "discount_percentage": 0,
+      "available_sizes": ["2T", "3T", "4T", "5T", "6T"],
+      "available_colors": ["Blue", "Green", "Yellow"],
+      "size_system": "US",
+      "material_composition": {
+        "cotton": 100
+      },
+      "season": "all",
+      "stock_quantities": {
+        "2T:Blue": 20,
+        "2T:Green": 18,
+        "2T:Yellow": 15,
+        "3T:Blue": 25,
+        "3T:Green": 22,
+        "3T:Yellow": 20,
+        "4T:Blue": 25,
+        "4T:Green": 22,
+        "4T:Yellow": 20,
+        "5T:Blue": 20,
+        "5T:Green": 18,
+        "5T:Yellow": 15,
+        "6T:Blue": 15,
+        "6T:Green": 12,
+        "6T:Yellow": 10
+      },
+      "image_url": "https://example.com/kids-tshirt.jpg",
+      "is_available": true,
+      "created_at": "2023-01-04T08:40:00Z",
+      "updated_at": "2023-01-04T08:40:00Z"
+    }
+  }
+]

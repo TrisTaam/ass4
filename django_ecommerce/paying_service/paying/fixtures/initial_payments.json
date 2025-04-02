@@ -1,0 +1,111 @@
+[
+  {
+    "model": "paying.payment",
+    "pk": "payment_1001",
+    "fields": {
+      "customer_id": 3,
+      "customer_type": "registered",
+      "order_id": 1,
+      "amount": 126.93,
+      "currency": "USD",
+      "payment_method": "credit_card",
+      "payment_details": {
+        "card_type": "Visa",
+        "last_four": "4242",
+        "expiry_date": "12/25"
+      },
+      "status": "completed",
+      "created_at": "2023-01-05T13:00:00Z",
+      "updated_at": "2023-01-05T13:01:30Z",
+      "transaction_id": "txn_1001",
+      "notes": ""
+    }
+  },
+  {
+    "model": "paying.payment",
+    "pk": "payment_1002",
+    "fields": {
+      "customer_id": 4,
+      "customer_type": "vip",
+      "order_id": 2,
+      "amount": 3519.97,
+      "currency": "USD",
+      "payment_method": "platinum_card",
+      "payment_details": {
+        "card_type": "Platinum",
+        "last_four": "9876",
+        "expiry_date": "09/26"
+      },
+      "status": "completed",
+      "created_at": "2023-01-05T17:00:00Z",
+      "updated_at": "2023-01-05T17:01:15Z",
+      "transaction_id": "txn_1002",
+      "notes": "VIP customer, no service charge applied"
+    }
+  },
+  {
+    "model": "paying.payment",
+    "pk": "payment_1003",
+    "fields": {
+      "customer_id": 5,
+      "customer_type": "registered",
+      "order_id": 3,
+      "amount": 126.97,
+      "currency": "USD",
+      "payment_method": "apple_pay",
+      "payment_details": {
+        "device": "iPhone",
+        "token": "ap_token_123456"
+      },
+      "status": "completed",
+      "created_at": "2023-01-06T10:00:00Z",
+      "updated_at": "2023-01-06T10:00:45Z",
+      "transaction_id": "txn_1003",
+      "notes": ""
+    }
+  },
+  {
+    "model": "paying.payment",
+    "pk": "payment_1004",
+    "fields": {
+      "customer_id": 2,
+      "customer_type": "guest",
+      "order_id": 4,
+      "amount": 55.48,
+      "currency": "USD",
+      "payment_method": "debit_card",
+      "payment_details": {
+        "card_type": "Mastercard",
+        "last_four": "5678",
+        "expiry_date": "03/24"
+      },
+      "status": "refunded",
+      "created_at": "2023-01-06T12:00:00Z",
+      "updated_at": "2023-01-06T14:30:00Z",
+      "transaction_id": "txn_1004",
+      "notes": "Refunded due to order cancellation"
+    }
+  },
+  {
+    "model": "paying.payment",
+    "pk": "payment_1005",
+    "fields": {
+      "customer_id": 1,
+      "customer_type": "vip",
+      "order_id": 5,
+      "amount": 3552.97,
+      "currency": "USD",
+      "payment_method": "diamond_card",
+      "payment_details": {
+        "card_type": "Diamond",
+        "last_four": "1111",
+        "expiry_date": "05/27"
+      },
+      "status": "completed",
+      "created_at": "2023-01-07T14:00:00Z",
+      "updated_at": "2023-01-07T14:01:20Z",
+      "transaction_id": "txn_1005",
+      "notes": "VIP customer, no service charge applied"
+    }
+  }
+] 

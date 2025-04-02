@@ -1,0 +1,112 @@
+[
+  {
+    "model": "book.book",
+    "pk": 1,
+    "fields": {
+      "title": "Django for Beginners",
+      "author": "William S. Vincent",
+      "publisher": "Django Press",
+      "published_date": "2020-01-15",
+      "isbn": "9781234567897",
+      "binding": "paperback",
+      "page_count": 342,
+      "language": "English",
+      "genre": "Programming",
+      "description": "A comprehensive introduction to Django web framework for beginners.",
+      "price": 29.99,
+      "stock_quantity": 45,
+      "image_url": "https://example.com/django-beginners.jpg",
+      "is_available": true,
+      "created_at": "2023-01-01T12:00:00Z",
+      "updated_at": "2023-01-01T12:00:00Z"
+    }
+  },
+  {
+    "model": "book.book",
+    "pk": 2,
+    "fields": {
+      "title": "Python Crash Course",
+      "author": "Eric Matthes",
+      "publisher": "No Starch Press",
+      "published_date": "2019-05-03",
+      "isbn": "9781593279288",
+      "binding": "hardcover",
+      "page_count": 544,
+      "language": "English",
+      "genre": "Programming",
+      "description": "A hands-on, project-based introduction to Python programming.",
+      "price": 39.95,
+      "stock_quantity": 30,
+      "image_url": "https://example.com/python-crash.jpg",
+      "is_available": true,
+      "created_at": "2023-01-01T12:05:00Z",
+      "updated_at": "2023-01-01T12:05:00Z"
+    }
+  },
+  {
+    "model": "book.book",
+    "pk": 3,
+    "fields": {
+      "title": "Clean Code",
+      "author": "Robert C. Martin",
+      "publisher": "Prentice Hall",
+      "published_date": "2008-08-01",
+      "isbn": "9780132350884",
+      "binding": "hardcover",
+      "page_count": 464,
+      "language": "English",
+      "genre": "Software Engineering",
+      "description": "A handbook of agile software craftsmanship.",
+      "price": 49.99,
+      "stock_quantity": 25,
+      "image_url": "https://example.com/clean-code.jpg",
+      "is_available": true,
+      "created_at": "2023-01-01T12:10:00Z",
+      "updated_at": "2023-01-01T12:10:00Z"
+    }
+  },
+  {
+    "model": "book.book",
+    "pk": 4,
+    "fields": {
+      "title": "The Pragmatic Programmer",
+      "author": "Andrew Hunt, David Thomas",
+      "publisher": "Addison-Wesley Professional",
+      "published_date": "2019-09-13",
+      "isbn": "9780135957059",
+      "binding": "paperback",
+      "page_count": 352,
+      "language": "English",
+      "genre": "Software Engineering",
+      "description": "Your journey to mastery in software development.",
+      "price": 44.99,
+      "stock_quantity": 20,
+      "image_url": "https://example.com/pragmatic.jpg",
+      "is_available": true,
+      "created_at": "2023-01-01T12:15:00Z",
+      "updated_at": "2023-01-01T12:15:00Z"
+    }
+  },
+  {
+    "model": "book.book",
+    "pk": 5,
+    "fields": {
+      "title": "Fluent Python",
+      "author": "Luciano Ramalho",
+      "publisher": "O'Reilly Media",
+      "published_date": "2015-08-20",
+      "isbn": "9781491946008",
+      "binding": "paperback",
+      "page_count": 792,
+      "language": "English",
+      "genre": "Programming",
+      "description": "Clear, concise, and effective programming in Python.",
+      "price": 59.99,
+      "stock_quantity": 15,
+      "image_url": "https://example.com/fluent-python.jpg",
+      "is_available": true,
+      "created_at": "2023-01-01T12:20:00Z",
+      "updated_at": "2023-01-01T12:20:00Z"
+    }
+  }
+] 

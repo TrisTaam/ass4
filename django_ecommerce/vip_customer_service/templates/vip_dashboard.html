@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+
+{% block title %}VIP Dashboard{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4>Your VIP Profile</h4>
+                <span class="vip-badge">{{ customer.vip_tier }} Tier</span>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Account Details</h5>
+                        <table class="table table-dark">
+                            <tr>
+                                <th>Username</th>
+                                <td>{{ customer.username }}</td>
+                            </tr>
+                            <tr>
+                                <th>Name</th>
+                                <td>{{ customer.get_full_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{ customer.email }}</td>
+                            </tr>
+                            <tr>
+                                <th>Phone</th>
+                                <td>{{ customer.phone_number|default:"Not provided" }}</td>
+                            </tr>
+                            <tr>
+                                <th>Member Since</th>
+                                <td>{{ customer.membership_date|date:"F j, Y" }}</td>
+                            </tr>
+                            <tr>
+                                <th>Loyalty Points</th>
+                                <td><span class="vip-badge">{{ customer.loyalty_points }}</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Your VIP Status</h5>
+                        <div class="p-4" style="border: 1px solid var(--vip-gold); border-radius: 5px; background-color: rgba(212, 175, 55, 0.1);">
+                            <h4 style="color: var(--vip-gold);">{{ customer.get_vip_tier_display }} Member</h4>
+                            
+                            {% if customer.membership_expiry %}
+                            <p>Your membership expires on: {{ customer.membership_expiry|date:"F j, Y" }}</p>
+                            {% else %}
+                            <p>Your membership does not expire</p>
+                            {% endif %}
+                            
+                            <p>Annual spend: ${{ customer.annual_spend }}</p>
+                            
+                            <div class="mt-4">
+                                {% if customer.vip_tier != 'platinum' %}
+                                <a href="{% url 'vip_upgrade_tier' %}" class="btn btn-primary">Upgrade Your Tier</a>
+                                {% else %}
+                                <p class="text-center"><span class="vip-badge">Maximum Tier Achieved</span></p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4>Your VIP Benefits</h4>
+                <span class="badge bg-secondary">{{ active_benefits.count }} Active</span>
+            </div>
+            <div class="card-body">
+                {% if active_benefits %}
+                <div class="row">
+                    {% for benefit_link in active_benefits %}
+                    <div class="col-md-4 mb-3">
+                        <div class="p-3" style="border: 1px solid var(--vip-gold); border-radius: 5px; height: 100%;">
+                            <h5>{{ benefit_link.benefit.name }}</h5>
+                            <p>{{ benefit_link.benefit.description }}</p>
+                            <p>
+                                <span class="badge bg-secondary">{{ benefit_link.benefit.get_benefit_type_display }}</span>
+                                {% if benefit_link.benefit.benefit_type == 'discount' %}
+                                <span class="badge bg-success">{{ benefit_link.benefit.discount_percent }}% off</span>
+                                {% endif %}
+                            </p>
+                            <p class="small">
+                                Activated: {{ benefit_link.activated_date|date:"F j, Y" }}
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p>You don't have any active benefits yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if eligible_benefits %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>Available Benefits to Activate</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% for benefit in eligible_benefits %}
+                    <div class="col-md-4 mb-3">
+                        <div class="p-3" style="border: 1px solid #555; border-radius: 5px; height: 100%;">
+                            <h5>{{ benefit.name }}</h5>
+                            <p>{{ benefit.description }}</p>
+                            <p>
+                                <span class="badge bg-secondary">{{ benefit.get_benefit_type_display }}</span>
+                                {% if benefit.benefit_type == 'discount' %}
+                                <span class="badge bg-success">{{ benefit.discount_percent }}% off</span>
+                                {% endif %}
+                            </p>
+                            <div class="mt-3">
+                                <a href="{% url 'vip_activate_benefit' benefit.id %}" class="btn btn-sm btn-primary">Activate Benefit</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4>Your Shipping Addresses</h4>
+                <a href="{% url 'vip_add_address' %}" class="btn btn-sm btn-primary">Add New Address</a>
+            </div>
+            <div class="card-body">
+                {% if addresses %}
+                <div class="row">
+                    {% for address in addresses %}
+                    <div class="col-md-4 mb-3">
+                        <div class="p-3" style="border: 1px solid #555; border-radius: 5px;">
+                            {% if address.is_default %}
+                            <span class="badge bg-success mb-2">Default</span>
+                            {% endif %}
+                            <p>{{ address.address_line1 }}</p>
+                            {% if address.address_line2 %}
+                            <p>{{ address.address_line2 }}</p>
+                            {% endif %}
+                            <p>{{ address.city }}, {{ address.state }} {{ address.postal_code }}</p>
+                            <p>{{ address.country }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p>You haven't added any addresses yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,104 @@
+[
+  {
+    "model": "vip_customer_service.vipcustomer",
+    "pk": 1,
+    "fields": {
+      "email": "vip@example.com",
+      "password": "pbkdf2_sha256$260000$q9vXxSktH1anYkDYmDjTLg$+B/x8wFD9IWxmEE+tZsmzwzS3CmpNUK7BsWvn+9ORs0=",
+      "first_name": "VIP",
+      "last_name": "User",
+      "phone": "+1234567893",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2023-01-01T03:00:00Z",
+      "last_login": "2023-01-01T03:00:00Z",
+      "address": "555 Luxury Ave, Beverly Hills, CA 90210",
+      "birthday": "1988-05-12",
+      "vip_status_date": "2023-01-01",
+      "loyalty_points": 5000,
+      "personal_concierge": "Jane Smith",
+      "preferred_payment_method": "platinum_card",
+      "premium_shipping": true,
+      "vip_tier": "diamond",
+      "exclusive_offers": {
+        "early_access": true,
+        "private_events": true,
+        "birthday_gift": true
+      },
+      "preferences": {
+        "preferred_brands": ["Gucci", "Prada", "Louis Vuitton"],
+        "preferred_shipping": "priority",
+        "gift_wrapping": "premium"
+      }
+    }
+  },
+  {
+    "model": "vip_customer_service.vipcustomer",
+    "pk": 2,
+    "fields": {
+      "email": "david.miller@example.com",
+      "password": "pbkdf2_sha256$260000$q9vXxSktH1anYkDYmDjTLg$+B/x8wFD9IWxmEE+tZsmzwzS3CmpNUK7BsWvn+9ORs0=",
+      "first_name": "David",
+      "last_name": "Miller",
+      "phone": "+1234567898",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2023-01-01T05:00:00Z",
+      "last_login": "2023-01-01T05:00:00Z",
+      "address": "888 Elite St, Manhattan, NY 10001",
+      "birthday": "1975-08-22",
+      "vip_status_date": "2023-01-05",
+      "loyalty_points": 3500,
+      "personal_concierge": "Robert Johnson",
+      "preferred_payment_method": "black_card",
+      "premium_shipping": true,
+      "vip_tier": "platinum",
+      "exclusive_offers": {
+        "early_access": true,
+        "private_events": true,
+        "birthday_gift": true
+      },
+      "preferences": {
+        "preferred_brands": ["Rolex", "Armani", "Hugo Boss"],
+        "preferred_shipping": "next_day",
+        "gift_wrapping": "premium"
+      }
+    }
+  },
+  {
+    "model": "vip_customer_service.vipcustomer",
+    "pk": 3,
+    "fields": {
+      "email": "sophia.chen@example.com",
+      "password": "pbkdf2_sha256$260000$q9vXxSktH1anYkDYmDjTLg$+B/x8wFD9IWxmEE+tZsmzwzS3CmpNUK7BsWvn+9ORs0=",
+      "first_name": "Sophia",
+      "last_name": "Chen",
+      "phone": "+1234567899",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2023-01-02T01:00:00Z",
+      "last_login": "2023-01-02T01:00:00Z",
+      "address": "777 High End Blvd, San Francisco, CA 94105",
+      "birthday": "1990-11-15",
+      "vip_status_date": "2023-01-10",
+      "loyalty_points": 4200,
+      "personal_concierge": "Michelle Wong",
+      "preferred_payment_method": "gold_card",
+      "premium_shipping": true,
+      "vip_tier": "gold",
+      "exclusive_offers": {
+        "early_access": true,
+        "private_events": true,
+        "birthday_gift": true
+      },
+      "preferences": {
+        "preferred_brands": ["Chanel", "Dior", "Burberry"],
+        "preferred_shipping": "priority",
+        "gift_wrapping": "premium"
+      }
+    }
+  }
+] 

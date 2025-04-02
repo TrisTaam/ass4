@@ -1,0 +1,177 @@
+[
+  {
+    "model": "order.order",
+    "pk": 1,
+    "fields": {
+      "customer_id": 3,
+      "customer_type": "registered",
+      "order_date": "2023-01-05T13:00:00Z",
+      "status": "delivered",
+      "items": [
+        {
+          "item_id": 1,
+          "item_type": "book",
+          "quantity": 2,
+          "price": 29.99
+        },
+        {
+          "item_id": 3,
+          "item_type": "book",
+          "quantity": 1,
+          "price": 49.99
+        }
+      ],
+      "shipping_address": "123 Main St, Anytown, CA 12345",
+      "billing_address": "123 Main St, Anytown, CA 12345",
+      "payment_method": "credit_card",
+      "payment_id": "payment_1001",
+      "shipping_method": "standard",
+      "shipping_cost": 5.99,
+      "tax": 10.97,
+      "total_price": 126.93,
+      "delivery_date": "2023-01-10T15:30:00Z",
+      "tracking_number": "TRK123456789",
+      "notes": "Leave package at the front door"
+    }
+  },
+  {
+    "model": "order.order",
+    "pk": 2,
+    "fields": {
+      "customer_id": 4,
+      "customer_type": "vip",
+      "order_date": "2023-01-05T17:00:00Z",
+      "status": "shipped",
+      "items": [
+        {
+          "item_id": 2,
+          "item_type": "laptop",
+          "quantity": 1,
+          "price": 1999.99
+        },
+        {
+          "item_id": 2,
+          "item_type": "mobile",
+          "quantity": 1,
+          "price": 1199.99
+        }
+      ],
+      "shipping_address": "555 Luxury Ave, Beverly Hills, CA 90210",
+      "billing_address": "555 Luxury Ave, Beverly Hills, CA 90210",
+      "payment_method": "platinum_card",
+      "payment_id": "payment_1002",
+      "shipping_method": "express",
+      "shipping_cost": 0.00,
+      "tax": 319.99,
+      "total_price": 3519.97,
+      "delivery_date": null,
+      "tracking_number": "TRK987654321",
+      "notes": "Handle with care. Signature required."
+    }
+  },
+  {
+    "model": "order.order",
+    "pk": 3,
+    "fields": {
+      "customer_id": 5,
+      "customer_type": "registered",
+      "order_date": "2023-01-06T10:00:00Z",
+      "status": "processing",
+      "items": [
+        {
+          "item_id": 5,
+          "item_type": "clothes",
+          "quantity": 1,
+          "price": 19.99
+        },
+        {
+          "item_id": 3,
+          "item_type": "clothes",
+          "quantity": 1,
+          "price": 89.99
+        }
+      ],
+      "shipping_address": "222 Elm St, Riverside, WA 34567",
+      "billing_address": "222 Elm St, Riverside, WA 34567",
+      "payment_method": "apple_pay",
+      "payment_id": "payment_1003",
+      "shipping_method": "standard",
+      "shipping_cost": 5.99,
+      "tax": 11.00,
+      "total_price": 126.97,
+      "delivery_date": null,
+      "tracking_number": null,
+      "notes": ""
+    }
+  },
+  {
+    "model": "order.order",
+    "pk": 4,
+    "fields": {
+      "customer_id": 2,
+      "customer_type": "guest",
+      "order_date": "2023-01-06T12:00:00Z",
+      "status": "cancelled",
+      "items": [
+        {
+          "item_id": 4,
+          "item_type": "book",
+          "quantity": 1,
+          "price": 44.99
+        }
+      ],
+      "shipping_address": "Guest Shipping Address",
+      "billing_address": "Guest Billing Address",
+      "payment_method": "debit_card",
+      "payment_id": "payment_1004",
+      "shipping_method": "standard",
+      "shipping_cost": 5.99,
+      "tax": 4.50,
+      "total_price": 55.48,
+      "delivery_date": null,
+      "tracking_number": null,
+      "notes": "Cancelled by customer"
+    }
+  },
+  {
+    "model": "order.order",
+    "pk": 5,
+    "fields": {
+      "customer_id": 1,
+      "customer_type": "vip",
+      "order_date": "2023-01-07T14:00:00Z",
+      "status": "confirmed",
+      "items": [
+        {
+          "item_id": 5,
+          "item_type": "mobile",
+          "quantity": 1,
+          "price": 1199.99
+        },
+        {
+          "item_id": 4,
+          "item_type": "clothes",
+          "quantity": 1,
+          "price": 129.99
+        },
+        {
+          "item_id": 1,
+          "item_type": "laptop",
+          "quantity": 1,
+          "price": 1899.99
+        }
+      ],
+      "shipping_address": "VIP Address",
+      "billing_address": "VIP Billing Address",
+      "payment_method": "diamond_card",
+      "payment_id": "payment_1005",
+      "shipping_method": "priority",
+      "shipping_cost": 0.00,
+      "tax": 323.00,
+      "total_price": 3552.97,
+      "delivery_date": null,
+      "tracking_number": null,
+      "notes": "Gift wrap all items"
+    }
+  }
+] 

@@ -1,78 +1,243 @@
-version: '3'
 services:
-  db-customer:
+  # Shared MySQL database for all customer services
+  mysql-db:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: 2512
-      MYSQL_DATABASE: ecommerce_customers
     ports:
-      - "3307:3306"
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    # Create all databases during initialization
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --init-connect='CREATE DATABASE IF NOT EXISTS ecommerce_customers; CREATE DATABASE IF NOT EXISTS ecommerce_register_customers; CREATE DATABASE IF NOT EXISTS ecommerce_vip_customers;'
 
-  db-items:
+  # Shared MongoDB database for all item-related services
+  mongodb:
     image: mongo:latest
-    environment:
-      MONGO_INITDB_DATABASE: ecommerce_items
     ports:
       - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    # Initialize each database
+    command: mongod --bind_ip_all
 
-  db-transactions:
+  # Shared PostgreSQL database for all transaction-related services
+  postgres-db:
     image: postgres:latest
     environment:
       POSTGRES_PASSWORD: 2512
-      POSTGRES_DB: ecommerce_transactions
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # Initialize each database
+    command: postgres -c "CREATE DATABASE IF NOT EXISTS ecommerce_transactions;"
 
-  customer:
-    build: ./customer_service
+  customer-service:
+    build:
+      context: ./customer_service
+      dockerfile: Dockerfile
     ports:
-      - "8001:8001"
+      - "8009:8000"
     depends_on:
-      - db-customer
+      - mysql-db
+      - guest-customer
+      - register-customer
+      - vip-customer
+    volumes:
+      - ./customer_service:/app
+    environment:
+      - DB_HOST=mysql-db
+      - DB_NAME=ecommerce_customers
+      - DB_USER=root
+      - DB_PASSWORD=2512
+
+  guest-customer:
+    build:
+      context: ./guest_customer_service
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./guest_customer_service:/app
+      - ./guest_customer_service/data:/app/data
+
+  register-customer:
+    build:
+      context: ./register_customer_service
+      dockerfile: Dockerfile
+    ports:
+      - "8007:8000"
+    depends_on:
+      - mysql-db
+    environment:
+      - DB_HOST=mysql-db
+      - DB_NAME=ecommerce_register_customers
+      - DB_USER=root
+      - DB_PASSWORD=2512
+
+  vip-customer:
+    build:
+      context: ./vip_customer_service
+      dockerfile: Dockerfile
+    ports:
+      - "8008:8000"
+    depends_on:
+      - mysql-db
+    environment:
+      - DB_HOST=mysql-db
+      - DB_NAME=ecommerce_vip_customers
+      - DB_USER=root
+      - DB_PASSWORD=2512
 
   items:
-    build: ./items_service
+    build:
+      context: ./items_service
+      dockerfile: Dockerfile
     ports:
       - "8005:8005"
     depends_on:
-      - db-items
+      - mongodb
+      - book-service
+      - laptop-service
+      - mobile-service
+      - clothes-service
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/ecommerce_items
+
+  book-service:
+    build:
+      context: ./book_service
+      dockerfile: Dockerfile
+    ports:
+      - "8010:8010"
+    depends_on:
+      - mongodb
+    volumes:
+      - ./book_service:/app
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/ecommerce_books
+
+  laptop-service:
+    build:
+      context: ./laptop_service
+      dockerfile: Dockerfile
+    ports:
+      - "8011:8011"
+    depends_on:
+      - mongodb
+    volumes:
+      - ./laptop_service:/app
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/ecommerce_laptops
+
+  mobile-service:
+    build:
+      context: ./mobile_service
+      dockerfile: Dockerfile
+    ports:
+      - "8012:8012"
+    depends_on:
+      - mongodb
+    volumes:
+      - ./mobile_service:/app
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/ecommerce_mobiles
+
+  clothes-service:
+    build:
+      context: ./clothes_service
+      dockerfile: Dockerfile
+    ports:
+      - "8013:8013"
+    depends_on:
+      - mongodb
+    volumes:
+      - ./clothes_service:/app
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/ecommerce_clothes
 
   cart:
-    build: ./cart_service
+    build:
+      context: ./cart_service
+      dockerfile: Dockerfile
     ports:
       - "8002:8002"
     depends_on:
-      - db-transactions
+      - postgres-db
+    environment:
+      - DB_HOST=postgres-db
+      - DB_NAME=ecommerce_transactions
+      - DB_USER=postgres
+      - DB_PASSWORD=2512
 
   order:
-    build: ./order_service
+    build:
+      context: ./order_service
+      dockerfile: Dockerfile
     ports:
       - "8003:8003"
     depends_on:
-      - db-transactions
+      - postgres-db
+    environment:
+      - DB_HOST=postgres-db
+      - DB_NAME=ecommerce_transactions
+      - DB_USER=postgres
+      - DB_PASSWORD=2512
 
   paying:
-    build: ./paying_service
+    build:
+      context: ./paying_service
+      dockerfile: Dockerfile
     ports:
       - "8004:8004"
     depends_on:
-      - db-transactions
+      - postgres-db
+    environment:
+      - DB_HOST=postgres-db
+      - DB_NAME=ecommerce_transactions
+      - DB_USER=postgres
+      - DB_PASSWORD=2512
 
   shipping:
-    build: ./shipping_service
+    build:
+      context: ./shipping_service
+      dockerfile: Dockerfile
     ports:
       - "8006:8006"
     depends_on:
-      - db-transactions
+      - postgres-db
+    environment:
+      - DB_HOST=postgres-db
+      - DB_NAME=ecommerce_transactions
+      - DB_USER=postgres
+      - DB_PASSWORD=2512
 
   gateway:
-    build: ./gateway_service
+    build:
+      context: ./gateway_service
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     depends_on:
-      - customer
+      - customer-service
+      - guest-customer
+      - register-customer
+      - vip-customer
       - items
+      - book-service
+      - laptop-service
+      - mobile-service
+      - clothes-service
       - cart
       - order
       - paying
       - shipping
+
+volumes:
+  mysql_data:
+  mongo_data:
+  postgres_data:

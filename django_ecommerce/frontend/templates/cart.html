@@ -1,0 +1,288 @@
+{% extends 'base.html' %}
+
+{% block title %}Shopping Cart - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Shopping Cart</h1>
+    
+    <div class="row">
+        <!-- Cart Items -->
+        <div class="col-lg-8">
+            <div class="cart-items">
+                <!-- Items will be loaded dynamically via JavaScript -->
+            </div>
+            
+            <!-- Empty Cart Message -->
+            <div id="emptyCartMessage" class="text-center py-5" style="display: none;">
+                <i class="fas fa-shopping-cart fa-3x mb-3 text-muted"></i>
+                <h3>Your cart is empty</h3>
+                <p class="text-muted">Add items to your cart to continue shopping</p>
+                <a href="/" class="btn btn-primary mt-3">Continue Shopping</a>
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="col-lg-4">
+            <div class="order-summary">
+                <h4 class="mb-3">Order Summary</h4>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Subtotal</span>
+                    <span class="cart-subtotal">$0.00</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Shipping</span>
+                    <span class="shipping-cost">$0.00</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Tax</span>
+                    <span class="tax-amount">$0.00</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between mb-3">
+                    <strong>Total</strong>
+                    <strong class="cart-total">$0.00</strong>
+                </div>
+
+                <!-- Promo Code -->
+                <div class="mb-3">
+                    <label for="promoCode" class="form-label">Promo Code</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="promoCode" placeholder="Enter code">
+                        <button class="btn btn-outline-secondary" type="button" onclick="applyPromoCode()">Apply</button>
+                    </div>
+                </div>
+
+                <!-- Checkout Button -->
+                <button class="btn btn-primary w-100" onclick="proceedToCheckout()">
+                    Proceed to Checkout
+                </button>
+            </div>
+
+            <!-- Shipping Options -->
+            <div class="shipping-options mt-4">
+                <h5>Shipping Method</h5>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="shippingMethod" id="standardShipping" value="standard" checked>
+                    <label class="form-check-label" for="standardShipping">
+                        Standard Shipping (5-7 business days) - $5.99
+                    </label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="shippingMethod" id="expressShipping" value="express">
+                    <label class="form-check-label" for="expressShipping">
+                        Express Shipping (2-3 business days) - $12.99
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="shippingMethod" id="nextDayShipping" value="nextDay">
+                    <label class="form-check-label" for="nextDayShipping">
+                        Next Day Delivery - $19.99
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Item Template -->
+<template id="cartItemTemplate">
+    <div class="cart-item" data-item-id="" data-item-type="">
+        <div class="row align-items-center">
+            <div class="col-md-2">
+                <img src="" alt="" class="cart-item-image img-fluid">
+            </div>
+            <div class="col-md-4">
+                <h5 class="item-title"></h5>
+                <p class="item-details text-muted mb-0"></p>
+            </div>
+            <div class="col-md-3">
+                <div class="quantity-control">
+                    <button type="button" class="btn-quantity" onclick="updateQuantity(this, -1)">-</button>
+                    <input type="number" class="form-control quantity-input" value="1" min="1" max="99">
+                    <button type="button" class="btn-quantity" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <span class="item-price"></span>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-link text-danger" onclick="removeItem(this)">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</template>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Cart functionality
+function updateCart() {
+    const cartItems = document.querySelector('.cart-items');
+    const emptyCartMessage = document.getElementById('emptyCartMessage');
+    
+    if (cart.items.length === 0) {
+        cartItems.style.display = 'none';
+        emptyCartMessage.style.display = 'block';
+    } else {
+        cartItems.style.display = 'block';
+        emptyCartMessage.style.display = 'none';
+        
+        // Clear existing items
+        cartItems.innerHTML = '';
+        
+        // Add each item
+        cart.items.forEach(item => {
+            const itemElement = createCartItemElement(item);
+            cartItems.appendChild(itemElement);
+        });
+    }
+    
+    // Update summary
+    updateOrderSummary();
+}
+
+function createCartItemElement(item) {
+    const template = document.getElementById('cartItemTemplate');
+    const element = template.content.cloneNode(true);
+    
+    const container = element.querySelector('.cart-item');
+    container.dataset.itemId = item.id;
+    container.dataset.itemType = item.type;
+    
+    const image = element.querySelector('.cart-item-image');
+    image.src = item.image_url;
+    image.alt = item.name;
+    
+    element.querySelector('.item-title').textContent = item.name;
+    element.querySelector('.item-details').textContent = getItemDetails(item);
+    element.querySelector('.quantity-input').value = item.quantity;
+    element.querySelector('.item-price').textContent = `$${(item.price * item.quantity).toFixed(2)}`;
+    
+    return element;
+}
+
+function getItemDetails(item) {
+    switch (item.type) {
+        case 'book':
+            return `Author: ${item.author}`;
+        case 'laptop':
+            return `${item.processor}, ${item.ram} RAM`;
+        case 'mobile':
+            return `${item.storage}, ${item.color}`;
+        case 'clothes':
+            return `Size: ${item.size}, Color: ${item.color}`;
+        default:
+            return '';
+    }
+}
+
+function updateOrderSummary() {
+    const subtotal = cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const shipping = getShippingCost();
+    const tax = subtotal * 0.1; // 10% tax
+    const total = subtotal + shipping + tax;
+    
+    document.querySelector('.cart-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+    document.querySelector('.shipping-cost').textContent = `$${shipping.toFixed(2)}`;
+    document.querySelector('.tax-amount').textContent = `$${tax.toFixed(2)}`;
+    document.querySelector('.cart-total').textContent = `$${total.toFixed(2)}`;
+}
+
+function getShippingCost() {
+    const method = document.querySelector('input[name="shippingMethod"]:checked').value;
+    switch (method) {
+        case 'express':
+            return 12.99;
+        case 'nextDay':
+            return 19.99;
+        default:
+            return 5.99;
+    }
+}
+
+async function updateQuantity(button, change) {
+    const container = button.closest('.cart-item');
+    const input = container.querySelector('.quantity-input');
+    const newQuantity = Math.max(1, parseInt(input.value) + change);
+    
+    if (newQuantity === parseInt(input.value)) return;
+    
+    input.value = newQuantity;
+    
+    await updateCartQuantity(
+        container.dataset.itemId,
+        container.dataset.itemType,
+        newQuantity
+    );
+}
+
+async function removeItem(button) {
+    const container = button.closest('.cart-item');
+    
+    if (confirm('Are you sure you want to remove this item?')) {
+        await removeFromCart(
+            container.dataset.itemId,
+            container.dataset.itemType
+        );
+    }
+}
+
+async function applyPromoCode() {
+    const code = document.getElementById('promoCode').value.trim();
+    
+    if (!code) {
+        showToast('Please enter a promo code', 'warning');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_BASE_URL}/cart/promo`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+            body: JSON.stringify({ code }),
+        });
+        
+        if (!response.ok) {
+            throw new Error('Invalid promo code');
+        }
+        
+        const data = await response.json();
+        cart = data;
+        updateCart();
+        showToast('Promo code applied successfully', 'success');
+    } catch (error) {
+        showToast(error.message, 'error');
+    }
+}
+
+function proceedToCheckout() {
+    if (!currentUser) {
+        showToast('Please login to proceed with checkout', 'warning');
+        return;
+    }
+    
+    if (cart.items.length === 0) {
+        showToast('Your cart is empty', 'warning');
+        return;
+    }
+    
+    window.location.href = '/checkout';
+}
+
+// Initialize cart on page load
+document.addEventListener('DOMContentLoaded', () => {
+    updateCart();
+    
+    // Update summary when shipping method changes
+    document.querySelectorAll('input[name="shippingMethod"]').forEach(input => {
+        input.addEventListener('change', updateOrderSummary);
+    });
+});
+</script>
+{% endblock %} 

@@ -80,16 +80,16 @@ WSGI_APPLICATION = 'customer_service.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ecommerce_customers',
-        'USER': 'root',
-        'PASSWORD': '2512',
-        'HOST': 'db-customer',
-        'PORT': '3306',
+        'NAME': os.environ.get('DB_NAME', 'ecommerce_customers'),
+        'USER': os.environ.get('DB_USER', 'root'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', '2512'),
+        'HOST': os.environ.get('DB_HOST', 'mysql-db'),
+        'PORT': os.environ.get('DB_PORT', '3306'),
     }
 }
 

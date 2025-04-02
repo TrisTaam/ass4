@@ -1,0 +1,473 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Checkout</h1>
+    
+    <!-- Checkout Progress -->
+    <div class="checkout-progress mb-4">
+        <div class="progress" style="height: 4px;">
+            <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+        </div>
+        <div class="d-flex justify-content-between mt-2">
+            <span class="step active">Shipping</span>
+            <span class="step">Payment</span>
+            <span class="step">Review</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Checkout Forms -->
+        <div class="col-lg-8">
+            <!-- Shipping Form -->
+            <div id="shippingStep" class="checkout-step active">
+                <h3>Shipping Information</h3>
+                <form id="shippingForm" class="needs-validation" novalidate>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="firstName" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="lastName" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="city" class="form-label">City</label>
+                            <input type="text" class="form-control" id="city" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="state" class="form-label">State</label>
+                            <select class="form-select" id="state" required>
+                                <option value="">Choose...</option>
+                                <!-- States will be populated via JavaScript -->
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="zip" class="form-label">ZIP</label>
+                            <input type="text" class="form-control" id="zip" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-4">Continue to Payment</button>
+                </form>
+            </div>
+
+            <!-- Payment Form -->
+            <div id="paymentStep" class="checkout-step">
+                <h3>Payment Information</h3>
+                <form id="paymentForm" class="needs-validation" novalidate>
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="cardName" class="form-label">Name on Card</label>
+                            <input type="text" class="form-control" id="cardName" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="cardNumber" class="form-label">Card Number</label>
+                            <input type="text" class="form-control" id="cardNumber" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="expMonth" class="form-label">Month</label>
+                            <select class="form-select" id="expMonth" required>
+                                <option value="">MM</option>
+                                <!-- Months will be populated via JavaScript -->
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="expYear" class="form-label">Year</label>
+                            <select class="form-select" id="expYear" required>
+                                <option value="">YYYY</option>
+                                <!-- Years will be populated via JavaScript -->
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="cvv" class="form-label">CVV</label>
+                            <input type="text" class="form-control" id="cvv" required>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <button type="button" class="btn btn-outline-secondary me-2" onclick="goToStep('shipping')">Back</button>
+                        <button type="submit" class="btn btn-primary">Review Order</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Order Review -->
+            <div id="reviewStep" class="checkout-step">
+                <h3>Review Order</h3>
+                <div class="review-sections">
+                    <!-- Shipping Info Review -->
+                    <div class="review-section mb-4">
+                        <h5>Shipping Information</h5>
+                        <div id="shippingReview"></div>
+                        <button type="button" class="btn btn-link p-0" onclick="goToStep('shipping')">Edit</button>
+                    </div>
+
+                    <!-- Payment Info Review -->
+                    <div class="review-section mb-4">
+                        <h5>Payment Information</h5>
+                        <div id="paymentReview"></div>
+                        <button type="button" class="btn btn-link p-0" onclick="goToStep('payment')">Edit</button>
+                    </div>
+
+                    <!-- Items Review -->
+                    <div class="review-section">
+                        <h5>Order Items</h5>
+                        <div id="itemsReview"></div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button type="button" class="btn btn-outline-secondary me-2" onclick="goToStep('payment')">Back</button>
+                    <button type="button" class="btn btn-primary" onclick="placeOrder()">Place Order</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="col-lg-4">
+            <div class="order-summary">
+                <h4>Order Summary</h4>
+                <div class="summary-items">
+                    <!-- Items will be populated via JavaScript -->
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Subtotal</span>
+                    <span class="summary-subtotal"></span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Shipping</span>
+                    <span class="summary-shipping"></span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Tax</span>
+                    <span class="summary-tax"></span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <strong>Total</strong>
+                    <strong class="summary-total"></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let checkoutData = {
+    shipping: {},
+    payment: {},
+    items: [],
+    total: 0
+};
+
+// Initialize checkout
+document.addEventListener('DOMContentLoaded', () => {
+    // Populate state dropdown
+    populateStates();
+    
+    // Populate card expiration dates
+    populateExpDates();
+    
+    // Load cart items
+    loadCartItems();
+    
+    // Set up form validation
+    setupFormValidation();
+    
+    // Pre-fill shipping info if available
+    if (currentUser) {
+        prefillShippingInfo();
+    }
+});
+
+function populateStates() {
+    const states = [
+        'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
+        'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
+        'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
+        'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
+        'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
+    ];
+    
+    const select = document.getElementById('state');
+    states.forEach(state => {
+        const option = document.createElement('option');
+        option.value = state;
+        option.textContent = state;
+        select.appendChild(option);
+    });
+}
+
+function populateExpDates() {
+    const monthSelect = document.getElementById('expMonth');
+    const yearSelect = document.getElementById('expYear');
+    
+    // Populate months
+    for (let i = 1; i <= 12; i++) {
+        const month = i.toString().padStart(2, '0');
+        const option = document.createElement('option');
+        option.value = month;
+        option.textContent = month;
+        monthSelect.appendChild(option);
+    }
+    
+    // Populate years
+    const currentYear = new Date().getFullYear();
+    for (let i = 0; i < 10; i++) {
+        const year = currentYear + i;
+        const option = document.createElement('option');
+        option.value = year;
+        option.textContent = year;
+        yearSelect.appendChild(option);
+    }
+}
+
+function loadCartItems() {
+    checkoutData.items = cart.items;
+    updateOrderSummary();
+}
+
+function updateOrderSummary() {
+    const subtotal = checkoutData.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const shipping = 5.99; // Standard shipping
+    const tax = subtotal * 0.1; // 10% tax
+    const total = subtotal + shipping + tax;
+    
+    checkoutData.total = total;
+    
+    document.querySelector('.summary-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+    document.querySelector('.summary-shipping').textContent = `$${shipping.toFixed(2)}`;
+    document.querySelector('.summary-tax').textContent = `$${tax.toFixed(2)}`;
+    document.querySelector('.summary-total').textContent = `$${total.toFixed(2)}`;
+    
+    // Update summary items
+    const summaryItems = document.querySelector('.summary-items');
+    summaryItems.innerHTML = '';
+    
+    checkoutData.items.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'd-flex justify-content-between align-items-center mb-2';
+        itemDiv.innerHTML = `
+            <span>${item.name} x ${item.quantity}</span>
+            <span>$${(item.price * item.quantity).toFixed(2)}</span>
+        `;
+        summaryItems.appendChild(itemDiv);
+    });
+}
+
+function setupFormValidation() {
+    const forms = document.querySelectorAll('.needs-validation');
+    
+    forms.forEach(form => {
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+            
+            if (form.checkValidity()) {
+                if (form.id === 'shippingForm') {
+                    saveShippingInfo();
+                    goToStep('payment');
+                } else if (form.id === 'paymentForm') {
+                    savePaymentInfo();
+                    goToStep('review');
+                }
+            }
+            
+            form.classList.add('was-validated');
+        });
+    });
+}
+
+function saveShippingInfo() {
+    checkoutData.shipping = {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        address: document.getElementById('address').value,
+        city: document.getElementById('city').value,
+        state: document.getElementById('state').value,
+        zip: document.getElementById('zip').value,
+        phone: document.getElementById('phone').value
+    };
+}
+
+function savePaymentInfo() {
+    checkoutData.payment = {
+        cardName: document.getElementById('cardName').value,
+        cardNumber: maskCardNumber(document.getElementById('cardNumber').value),
+        expMonth: document.getElementById('expMonth').value,
+        expYear: document.getElementById('expYear').value
+    };
+}
+
+function maskCardNumber(number) {
+    return `****-****-****-${number.slice(-4)}`;
+}
+
+function goToStep(step) {
+    const steps = ['shipping', 'payment', 'review'];
+    const currentIndex = steps.indexOf(step);
+    
+    // Update progress bar
+    document.querySelector('.progress-bar').style.width = `${(currentIndex / 2) * 100}%`;
+    
+    // Update step indicators
+    document.querySelectorAll('.step').forEach((el, index) => {
+        el.classList.toggle('active', index <= currentIndex);
+    });
+    
+    // Show current step
+    document.querySelectorAll('.checkout-step').forEach(el => {
+        el.classList.remove('active');
+    });
+    document.getElementById(`${step}Step`).classList.add('active');
+    
+    // Update review sections if going to review step
+    if (step === 'review') {
+        updateReviewSection();
+    }
+}
+
+function updateReviewSection() {
+    // Update shipping review
+    document.getElementById('shippingReview').innerHTML = `
+        <p class="mb-1">${checkoutData.shipping.firstName} ${checkoutData.shipping.lastName}</p>
+        <p class="mb-1">${checkoutData.shipping.address}</p>
+        <p class="mb-1">${checkoutData.shipping.city}, ${checkoutData.shipping.state} ${checkoutData.shipping.zip}</p>
+        <p class="mb-1">${checkoutData.shipping.phone}</p>
+    `;
+    
+    // Update payment review
+    document.getElementById('paymentReview').innerHTML = `
+        <p class="mb-1">${checkoutData.payment.cardName}</p>
+        <p class="mb-1">${checkoutData.payment.cardNumber}</p>
+        <p class="mb-1">Expires: ${checkoutData.payment.expMonth}/${checkoutData.payment.expYear}</p>
+    `;
+    
+    // Update items review
+    const itemsReview = document.getElementById('itemsReview');
+    itemsReview.innerHTML = '';
+    
+    checkoutData.items.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'd-flex justify-content-between align-items-center mb-2';
+        itemDiv.innerHTML = `
+            <div>
+                <h6 class="mb-0">${item.name}</h6>
+                <small class="text-muted">Quantity: ${item.quantity}</small>
+            </div>
+            <span>$${(item.price * item.quantity).toFixed(2)}</span>
+        `;
+        itemsReview.appendChild(itemDiv);
+    });
+}
+
+async function placeOrder() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/orders/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                shipping_info: checkoutData.shipping,
+                payment_info: checkoutData.payment,
+                items: checkoutData.items,
+                total: checkoutData.total
+            })
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to place order');
+        }
+        
+        const order = await response.json();
+        
+        // Clear cart
+        cart.items = [];
+        localStorage.setItem('cart', JSON.stringify(cart));
+        
+        // Show success message
+        showToast('Order placed successfully!', 'success');
+        
+        // Redirect to order confirmation
+        window.location.href = `/orders/${order.id}`;
+    } catch (error) {
+        showToast(error.message, 'error');
+    }
+}
+
+function prefillShippingInfo() {
+    if (currentUser.shipping_address) {
+        const address = currentUser.shipping_address;
+        document.getElementById('firstName').value = currentUser.first_name;
+        document.getElementById('lastName').value = currentUser.last_name;
+        document.getElementById('address').value = address.street;
+        document.getElementById('city').value = address.city;
+        document.getElementById('state').value = address.state;
+        document.getElementById('zip').value = address.zip;
+        document.getElementById('phone').value = currentUser.phone;
+    }
+}
+</script>
+
+<style>
+.checkout-progress .step {
+    position: relative;
+    color: #6c757d;
+}
+
+.checkout-progress .step.active {
+    color: #0d6efd;
+}
+
+.checkout-progress .step::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    background-color: #fff;
+    border: 2px solid #6c757d;
+    border-radius: 50%;
+}
+
+.checkout-progress .step.active::before {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.checkout-step {
+    display: none;
+}
+
+.checkout-step.active {
+    display: block;
+}
+
+.order-summary {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 0.25rem;
+}
+
+.review-section {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.25rem;
+}
+</style>
+{% endblock %} 
