@@ -1,21 +1,338 @@
-{% extends 'base.html' %}
-{% block content %}
-    <h1>Checkout</h1>
-    <p>Total Price: ${{ total_price }}</p>
-    <form method="post">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label>Shipping Method</label>
-            <select name="shipping_method" class="form-select">
-                <option value="standard">Standard ($5)</option>
-            </select>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - E-Commerce Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+        nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .checkout-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .checkout-form {
+            flex: 3;
+            min-width: 300px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .order-summary {
+            flex: 2;
+            min-width: 250px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            align-self: flex-start;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .form-row .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+            border: none;
+            font-size: 1.1rem;
+            width: 100%;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-top: 2px solid #333;
+            margin-top: 10px;
+        }
+        .cart-items {
+            margin-bottom: 20px;
+        }
+        .cart-item {
+            display: flex;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            margin-right: 10px;
+            object-fit: contain;
+            background-color: #f4f4f4;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        .cart-item-details {
+            flex: 1;
+        }
+        .cart-item-details h4 {
+            margin: 0 0 5px 0;
+            font-size: 1rem;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Checkout</h1>
+    </header>
+
+    <nav>
+        <a href="/home/">Home</a>
+        <a href="/products/">Products</a>
+        {% if request.user.is_authenticated or request.session.is_authenticated %}
+            <a href="/cart/">Cart</a>
+            <a href="/profile/">Profile</a>
+            <a href="/logout/">Logout</a>
+        {% else %}
+            <a href="/login/">Login</a>
+            <a href="/register/">Register</a>
+        {% endif %}
+    </nav>
+
+    <div class="container">
+        <div class="checkout-container">
+            <div class="checkout-form">
+                <h2>Shipping Information</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="first-name">First Name</label>
+                            <input type="text" id="first-name" name="first_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name">Last Name</label>
+                            <input type="text" id="last-name" name="last_name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" id="address" name="address" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" name="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State/Province</label>
+                            <input type="text" id="state" name="state" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="zip">ZIP/Postal Code</label>
+                            <input type="text" id="zip" name="zip" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <select id="country" name="country" required>
+                                <option value="">Select Country</option>
+                                <option value="US">United States</option>
+                                <option value="CA">Canada</option>
+                                <option value="UK">United Kingdom</option>
+                                <option value="AU">Australia</option>
+                                <!-- Add more countries as needed -->
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <h2>Shipping Method</h2>
+                    <div class="form-group">
+                        <select name="shipping_method" class="form-select" required>
+                            <option value="standard">Standard Shipping ($5.00)</option>
+                            <option value="express">Express Shipping ($15.00)</option>
+                            <option value="overnight">Overnight Shipping ($25.00)</option>
+                        </select>
+                    </div>
+                    
+                    <h2>Payment Information</h2>
+                    <div class="form-group">
+                        <label for="payment-method">Payment Method</label>
+                        <select id="payment-method" name="payment_method" required>
+                            <option value="credit_card">Credit Card</option>
+                            <option value="paypal">PayPal</option>
+                        </select>
+                    </div>
+                    
+                    <div id="credit-card-fields">
+                        <div class="form-group">
+                            <label for="card-number">Card Number</label>
+                            <input type="text" id="card-number" name="card_number" placeholder="1234 5678 9012 3456">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="expiry-date">Expiry Date</label>
+                                <input type="text" id="expiry-date" name="expiry_date" placeholder="MM/YY">
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" name="cvv" placeholder="123">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="card-name">Name on Card</label>
+                            <input type="text" id="card-name" name="card_name">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn">Complete Order</button>
+                </form>
+            </div>
+            
+            <div class="order-summary">
+                <h2>Order Summary</h2>
+                <div class="cart-items">
+                    <!-- This would be populated dynamically with the cart items -->
+                    <div class="cart-item">
+                        <img src="/static/img/product-placeholder.jpg" alt="Product" class="cart-item-image">
+                        <div class="cart-item-details">
+                            <h4>Product Name</h4>
+                            <div>Quantity: 2</div>
+                            <div>$99.99</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="summary-item">
+                    <div>Subtotal</div>
+                    <div>${{ subtotal|floatformat:2 }}</div>
+                </div>
+                <div class="summary-item">
+                    <div>Shipping</div>
+                    <div id="shipping-cost">$5.00</div>
+                </div>
+                <div class="summary-item">
+                    <div>Tax</div>
+                    <div>${{ tax|floatformat:2 }}</div>
+                </div>
+                <div class="summary-total">
+                    <div>Total</div>
+                    <div>${{ total_price|floatformat:2 }}</div>
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label>Payment Method</label>
-            <select name="payment_method" class="form-select">
-                <option value="credit_card">Credit Card</option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-success">Pay Now</button>
-    </form>
-{% endblock %}
+    </div>
+
+    <footer>
+        <p>&copy; 2025 E-Commerce Platform. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Toggle payment method fields
+        document.getElementById('payment-method').addEventListener('change', function() {
+            const creditCardFields = document.getElementById('credit-card-fields');
+            if (this.value === 'credit_card') {
+                creditCardFields.style.display = 'block';
+            } else {
+                creditCardFields.style.display = 'none';
+            }
+        });
+        
+        // Update shipping cost based on selection
+        document.querySelector('select[name="shipping_method"]').addEventListener('change', function() {
+            const shippingCostElement = document.getElementById('shipping-cost');
+            let shippingCost = '$5.00';
+            
+            if (this.value === 'express') {
+                shippingCost = '$15.00';
+            } else if (this.value === 'overnight') {
+                shippingCost = '$25.00';
+            }
+            
+            shippingCostElement.textContent = shippingCost;
+            
+            // In a real application, you would recalculate the total here
+        });
+    </script>
+</body>
+</html>

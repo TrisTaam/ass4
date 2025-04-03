@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+
+{% block title %}Products{% if category %} - {{ category|title }}{% endif %} - E-Commerce Platform{% endblock %}
+
+{% block extra_css %}
+<style>
+    .filter-section {
+        margin-bottom: 20px;
+    }
+    
+    .price-range {
+        display: flex;
+        align-items: center;
+    }
+    
+    .price-input {
+        width: 80px;
+    }
+    
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1>{% if category %}{{ category|title }}{% else %}All Products{% endif %}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Filters Sidebar -->
+    <div class="col-md-3">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Filters</h5>
+            </div>
+            <div class="card-body">
+                <form id="filter-form">
+                    <!-- Category Filter -->
+                    <div class="filter-section">
+                        <h6>Categories</h6>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="books" id="category-books" name="category">
+                            <label class="form-check-label" for="category-books">Books</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="laptops" id="category-laptops" name="category">
+                            <label class="form-check-label" for="category-laptops">Laptops</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="mobiles" id="category-mobiles" name="category">
+                            <label class="form-check-label" for="category-mobiles">Mobile Phones</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="clothes" id="category-clothes" name="category">
+                            <label class="form-check-label" for="category-clothes">Clothes</label>
+                        </div>
+                    </div>
+                    
+                    <!-- Price Range Filter -->
+                    <div class="filter-section">
+                        <h6>Price Range</h6>
+                        <div class="price-range">
+                            <input type="number" class="form-control price-input" id="min-price" name="min_price" placeholder="Min">
+                            <span class="mx-2">to</span>
+                            <input type="number" class="form-control price-input" id="max-price" name="max_price" placeholder="Max">
+                        </div>
+                    </div>
+                    
+                    <!-- Rating Filter -->
+                    <div class="filter-section">
+                        <h6>Rating</h6>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="4" id="rating-4" name="rating">
+                            <label class="form-check-label" for="rating-4">4★ & above</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="3" id="rating-3" name="rating">
+                            <label class="form-check-label" for="rating-3">3★ & above</label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Products Grid -->
+    <div class="col-md-9">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <input type="text" class="form-control" id="search-input" placeholder="Search products...">
+                </div>
+                <div>
+                    <select class="form-select" id="sort-select">
+                        <option value="popularity">Sort by: Popularity</option>
+                        <option value="price_low">Price: Low to High</option>
+                        <option value="price_high">Price: High to Low</option>
+                        <option value="rating">Rating</option>
+                        <option value="newest">Newest First</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="product-grid">
+                    {% for i in "123456789"|make_list %}
+                    <div class="card product-card">
+                        <img src="/static/img/product-placeholder.jpg" class="card-img-top product-img" alt="Product">
+                        <div class="card-body">
+                            <h5 class="card-title">Product Name</h5>
+                            <div class="mb-2">
+                                <span class="text-warning">★★★★☆</span>
+                                <small>(4.2)</small>
+                            </div>
+                            <p class="h5 mb-3">$99.99</p>
+                            <div class="d-grid gap-2">
+                                <a href="/product/{{ i }}/" class="btn btn-primary btn-sm">View Details</a>
+                                <button class="btn btn-success btn-sm add-to-cart" data-product-id="{{ i }}">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Pagination -->
+                <nav class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    // Add to cart functionality
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.getAttribute('data-product-id');
+            // Add AJAX call to add item to cart
+            alert(`Product ${productId} added to cart!`);
+        });
+    });
+    
+    // Filter form submission
+    document.getElementById('filter-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Add AJAX call to filter products
+        console.log('Filtering products...');
+    });
+    
+    // Search functionality
+    document.getElementById('search-input').addEventListener('keyup', function() {
+        // Add search functionality
+        console.log('Searching: ' + this.value);
+    });
+    
+    // Sort functionality
+    document.getElementById('sort-select').addEventListener('change', function() {
+        // Add sort functionality
+        console.log('Sorting by: ' + this.value);
+    });
+</script>
+{% endblock %}
+{% endblock %}

@@ -123,8 +123,37 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-TATICFILES_DIRS = [
-    BASE_DIR / "static",  # Assuming your static files are in the `static/` directory
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),  # Fixing typo in STATICFILES_DIRS
 ]
 
-STATIC_ROOT = BASE_DIR / "staticfiles"  # For production, you would run `collectstatic` to bundle all static files
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")  # For production, you would run `collectstatic` to bundle all static files
+
+# Media files (uploaded by users)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Configure standalone mode for development without other microservices
+STANDALONE_MODE = os.environ.get('STANDALONE_MODE', 'True').lower() in ('true', '1', 't')
+
+# Set up logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': False,
+        },
+    },
+}

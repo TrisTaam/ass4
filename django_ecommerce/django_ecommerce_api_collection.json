@@ -1,0 +1,531 @@
+{
+  "info": {
+    "_postman_id": "e5a7b8c9-d0f1-4e2e-8a3b-6c7d8e9f0a1b",
+    "name": "Django E-Commerce Microservices",
+    "description": "API collection for testing the Django E-Commerce microservices architecture",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Customer Service",
+      "item": [
+        {
+          "name": "Get All Customers",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8001/api/customer/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8001",
+              "path": ["api", "customer", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Customer by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8001/api/customer/1/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8001",
+              "path": ["api", "customer", "1", ""]
+            }
+          }
+        },
+        {
+          "name": "Create Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"newuser\",\n    \"email\": \"newuser@example.com\",\n    \"password\": \"securepassword123\",\n    \"first_name\": \"New\",\n    \"last_name\": \"User\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8001/api/customer/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8001",
+              "path": ["api", "customer", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cart Service",
+      "item": [
+        {
+          "name": "Get User Cart",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-User-ID",
+                "value": "1"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8002/api/cart/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8002",
+              "path": ["api", "cart", ""]
+            }
+          }
+        },
+        {
+          "name": "Add Item to Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-User-ID",
+                "value": "1"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"product_id\": \"1\",\n    \"quantity\": 2\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8002/api/cart/add/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8002",
+              "path": ["api", "cart", "add", ""]
+            }
+          }
+        },
+        {
+          "name": "Update Cart Item",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-User-ID",
+                "value": "1"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"product_id\": \"1\",\n    \"quantity\": 3\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8002/api/cart/update/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8002",
+              "path": ["api", "cart", "update", ""]
+            }
+          }
+        },
+        {
+          "name": "Remove Item from Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-User-ID",
+                "value": "1"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8002/api/cart/remove/1/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8002",
+              "path": ["api", "cart", "remove", "1", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Items Service",
+      "item": [
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8005/api/items/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8005",
+              "path": ["api", "items", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Product by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8005/api/items/1/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8005",
+              "path": ["api", "items", "1", ""]
+            }
+          }
+        },
+        {
+          "name": "Search Products",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8005/api/items/search/?query=laptop",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8005",
+              "path": ["api", "items", "search", ""],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "laptop"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Order Service",
+      "item": [
+        {
+          "name": "Get User Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-User-ID",
+                "value": "1"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8003/api/order/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8003",
+              "path": ["api", "order", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Order by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-User-ID",
+                "value": "1"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8003/api/order/1/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8003",
+              "path": ["api", "order", "1", ""]
+            }
+          }
+        },
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-User-ID",
+                "value": "1"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"shipping_address\": {\n        \"first_name\": \"John\",\n        \"last_name\": \"Doe\",\n        \"address\": \"123 Main St\",\n        \"city\": \"Anytown\",\n        \"state\": \"CA\",\n        \"zip\": \"12345\",\n        \"country\": \"US\",\n        \"phone\": \"555-123-4567\"\n    },\n    \"payment_method\": \"credit-card\",\n    \"shipping_method\": \"standard\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8003/api/order/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8003",
+              "path": ["api", "order", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payment Service",
+      "item": [
+        {
+          "name": "Process Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-User-ID",
+                "value": "1"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"order_id\": \"1\",\n    \"payment_method\": \"credit-card\",\n    \"card_number\": \"4111111111111111\",\n    \"expiry_date\": \"12/25\",\n    \"cvv\": \"123\",\n    \"amount\": 99.99\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8004/api/paying/process/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8004",
+              "path": ["api", "paying", "process", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Payment Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-User-ID",
+                "value": "1"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8004/api/paying/1/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8004",
+              "path": ["api", "paying", "1", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Shipping Service",
+      "item": [
+        {
+          "name": "Get Shipping Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-User-ID",
+                "value": "1"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8006/api/shipping/1/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8006",
+              "path": ["api", "shipping", "1", ""]
+            }
+          }
+        },
+        {
+          "name": "Create Shipping",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-User-ID",
+                "value": "1"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"order_id\": \"1\",\n    \"shipping_method\": \"standard\",\n    \"tracking_number\": \"TRACK123456\",\n    \"status\": \"processing\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8006/api/shipping/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8006",
+              "path": ["api", "shipping", ""]
+            }
+          }
+        },
+        {
+          "name": "Update Shipping Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-User-ID",
+                "value": "1"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"status\": \"shipped\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8006/api/shipping/1/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8006",
+              "path": ["api", "shipping", "1", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Gateway Service",
+      "item": [
+        {
+          "name": "Get Products via Gateway",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8007/api/gateway/items/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8007",
+              "path": ["api", "gateway", "items", ""]
+            }
+          }
+        },
+        {
+          "name": "Get User Cart via Gateway",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-User-ID",
+                "value": "1"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8007/api/gateway/cart/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8007",
+              "path": ["api", "gateway", "cart", ""]
+            }
+          }
+        },
+        {
+          "name": "Create Order via Gateway",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-User-ID",
+                "value": "1"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"shipping_address\": {\n        \"first_name\": \"John\",\n        \"last_name\": \"Doe\",\n        \"address\": \"123 Main St\",\n        \"city\": \"Anytown\",\n        \"state\": \"CA\",\n        \"zip\": \"12345\",\n        \"country\": \"US\",\n        \"phone\": \"555-123-4567\"\n    },\n    \"payment_method\": \"credit-card\",\n    \"shipping_method\": \"standard\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8007/api/gateway/order/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8007",
+              "path": ["api", "gateway", "order", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Product Category Services",
+      "item": [
+        {
+          "name": "Get All Books",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8010/api/books/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8010",
+              "path": ["api", "books", ""]
+            }
+          }
+        },
+        {
+          "name": "Get All Laptops",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8011/api/laptops/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8011",
+              "path": ["api", "laptops", ""]
+            }
+          }
+        },
+        {
+          "name": "Get All Mobiles",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8012/api/mobiles/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8012",
+              "path": ["api", "mobiles", ""]
+            }
+          }
+        },
+        {
+          "name": "Get All Clothes",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8013/api/clothes/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8013",
+              "path": ["api", "clothes", ""]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
